@@ -1,26 +1,25 @@
 # https://www.acmicpc.net/problem/1655
 
-
 import sys
 import heapq
-import bisect
-
 input = sys.stdin.readline
 
 n = int(input())
-heap = []
-
+maxheap = []
+minheap = []
 
 for i in range(n):
     x = int(input())
-    if len(heap) == 0:
-        heapq.heappush(heap, x)
+    if len(maxheap) == len(minheap):
+        heapq.heappush(maxheap, -x)
     else:
-        idx = bisect.bisect_left(heap, x)
-        heap.insert(idx, x)
+        heapq.heappush(minheap, x)
+    
+    if len(maxheap) >= 1 and len(minheap) >= 1 and maxheap[0] * (-1) > minheap[0]:
+        maxpop = heapq.heappop(maxheap) * (-1)
+        minpop = heapq.heappop(minheap)
 
-    length = len(heap)
-    if length % 2 == 0:
-        print(min(heap[length//2], heap[length//2-1]))
-    else:
-        print(heap[length//2])
+        heapq.heappush(maxheap, minpop * (-1))
+        heapq.heappush(minheap, maxpop)
+
+    print(maxheap[0] * (-1))
