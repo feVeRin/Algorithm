@@ -10,9 +10,8 @@ arr = [int(input()) for _ in range(n)]
 arr.sort()
 
 
-start = arr[1] - arr[0]
+start = 1
 end = arr[-1] - arr[0]
-
 res = 0
 
 while start <= end:
